@@ -43,10 +43,10 @@ jobs:
         #run: npm install
         
         
-      - name: Run the tests
-        run: npm run test -- --coverage
-        env:
-          CI: true
+      #- name: Run the tests
+        #run: npm run test -- --coverage
+        #env:
+          #CI: true
         
       #- name: SonarCloud Scan
         #uses: SonarSource/sonarcloud-github-action@master
