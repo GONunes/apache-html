@@ -68,8 +68,4 @@ jobs:
           
       - name: Config Container on VM
         run: |
-          ssh aws-cloud "sudo docker stop nginx-html"
-          ssh aws-cloud "sudo docker system prune -f"
-          ssh aws-cloud "sudo docker pull gonunes/nginx-html:latest"
-          ssh aws-cloud "sudo docker system prune -f"
           ssh aws-cloud "sudo docker run -d --name nginx-html -p 8080:8080 --restart unless-stopped gonunes/nginx-html:latest"
