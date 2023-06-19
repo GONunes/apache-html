@@ -33,14 +33,14 @@ jobs:
         uses: actions/checkout@v3
       
 
-      - name: Set up Node.js 18.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
+      #- name: Set up Node.js 18.x
+        #uses: actions/setup-node@v3
+        #with:
+          #node-version: 18.x
           
           
-      - name: Install dependencies
-        run: npm install
+      #- name: Install dependencies
+        #run: npm install
         
         
       - name: Run the tests
@@ -54,8 +54,8 @@ jobs:
           #GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           #SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           
-      - name: Build the application
-        run: npm run build
+      #- name: Build the application
+        #run: npm run build
 
       - name: Deploy Docker
         env:
@@ -63,12 +63,12 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-          docker build . -t gonunes/react-app:latest
-          docker push gonunes/react-app:latest
+          docker build . -t gonunes/nginx-html:latest
+          docker push gonunes/nginx-html:latest
           
       - name: Config Container on VM
         run: |
-          ssh aws-cloud "sudo docker stack rm react-app"
-          ssh aws-cloud "sudo sleep 15"
-          ssh aws-cloud "sudo docker stack deploy -c docker-compose.yml react-app"
+          ssh aws-cloud "sudo docker stop nginx-html"
+          ssh aws-cloud "sudo docker system prune -f"
+          ssh aws-cloud "sudo docker pull gonunes/nginx-html:latest"
           ssh aws-cloud "sudo docker system prune -f"
